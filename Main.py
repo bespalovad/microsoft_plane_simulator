@@ -31,8 +31,8 @@ class Start(QtWidgets.QMainWindow, S):
 		self.key = key
 		try:
 			self.label.setText("Max speed: %.2f km/h" % (self.planes_dict.get(key)[0] * 72000.0))
-			self.label_2.setText("Pitch speed: %.2f deg/s" % (self.planes_dict.get(key)[1][0] * 100000.0))
-			self.label_3.setText("Roll speed: %.2f deg/s" % (self.planes_dict.get(key)[1][1] * 10000.0))
+			self.label_2.setText("Pitch speed: %.2f deg/s" % (self.planes_dict.get(key)[1][0] * 10000.0))
+			self.label_3.setText("Roll speed: %.2f deg/s" % (self.planes_dict.get(key)[1][1] * 1000.0))
 		except Exception:
 			self.label.setText("Max speed: -")
 			self.label_2.setText("Pitch speed: -")
@@ -78,9 +78,9 @@ class Loop(threading.Thread):
 			self.b.set_pologSama(self.c)
 			self.b.set_vectorSkorosti(self.c)
 			self.b.set_eng_procent(self.p)
-			coord_x = "X: " + str("%.2f" % self.b.get_coord()[0])
-			coord_y = "Y: " + str("%.2f" % self.b.get_coord()[1])
-			coord_z = "Z: " + str("%.2f" % self.b.get_coord()[2])
+			coord_x = "X: " + str("%.2f" % self.b.get_coord()[0]) + " km"
+			coord_y = "Y: " + str("%.2f" % self.b.get_coord()[1]) + " km"
+			coord_z = "Z: " + str("%.2f" % self.b.get_coord()[2]) + " km"
 			direct_x = self.azimut(self.b.get_plogSama()[0])
 			direct_y = self.horizont(self.b.get_plogSama()[0])
 			direct_z = self.list_angle(self.b.get_plogSama()[2], self.b.get_plogSama()[1])
@@ -615,7 +615,7 @@ def readFile():
     for line in f:
         newline = line.replace("\n", "")
         tech_list = newline.split(":")
-        new_tech_list = [float(tech_list[1])/72000, [float(tech_list[2])/100000.0, float(tech_list[3])/10000.0], tech_list[4]]
+        new_tech_list = [float(tech_list[1])/72000, [float(tech_list[2])/10000.0, float(tech_list[3])/1000.0], tech_list[4]]
         name = tech_list[0]
         planes_dict[name] = new_tech_list
     return planes_dict
